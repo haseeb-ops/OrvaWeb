@@ -129,6 +129,21 @@
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1px; background: var(--border); border: 1px solid var(--border);
   }
+
+  /* Medium devices (tablet portrait): 2-col grid — center the lone last card */
+  @media (min-width: 601px) and (max-width: 960px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+      background: var(--navy-deep); /* remove gap color bleed */
+      gap: 1px;
+    }
+    .s-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: 50%;
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
   .s-card {
     background: var(--navy-deep); padding: 2.8rem 2.2rem;
     position: relative; overflow: hidden; transition: background 0.3s;
@@ -492,6 +507,8 @@
     .t-card.t-active { flex: 0 0 82%; }
     .g-item { flex: 0 0 70%; height: 200px; }
     .g-item.g-active { flex: 0 0 80%; height: 260px; }
+    /* Hide prev/next buttons in gallery and testimonials on mobile */
+    .g-btn, .t-btn { display: none; }
   }
 </style>
 </head>
