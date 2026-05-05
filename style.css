@@ -72,7 +72,7 @@
 
 .whatsapp-float:hover .whatsapp-icon {
   transform: scale(1.1);
-  animation: none;
+  animation: none
 }
 
 /* Floating Animation */
@@ -892,7 +892,7 @@ footer {
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .hero-visual { display: none; }
+      .hero{margin-top: 70px;}
       .nav-links { display: none; }
       .hero-grid-bg {
       background-image:
