@@ -1,1241 +1,478 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ORVA Security Systems</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --navy:      #152040;
-    --navy-deep: #0c1628;
-    --navy-mid:  #1a2a4a;
-    --gold:      #b89a5a;
-    --gold-light:#cdb47a;
-    --white:     #f5f3ee;
-    --gray:      #8a90a0;
-    --border:    rgba(184,154,90,0.18);
-  }
-
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Barlow', sans-serif;
-    background: var(--navy-deep);
-    color: var(--white);
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.1rem 5vw;
-    background: rgba(12,22,40,0.95);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-  .nav-wordmark { display: flex; flex-direction: column; line-height: 1; }
-  .nav-wordmark .w1 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.4rem; font-weight: 800;
-    letter-spacing: 0.18em; color: var(--white);
-  }
-  .nav-wordmark .w2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.62rem; font-weight: 600;
-    letter-spacing: 0.28em; color: var(--gold);
-    text-transform: uppercase; margin-top: 2px;
-  }
-  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
-  .nav-links a {
-    color: rgba(245,243,238,0.6); text-decoration: none;
-    font-size: 0.82rem; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--gold-light); }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh; display: flex; align-items: center;
-    padding: 9rem 5vw 5rem;
-    position: relative; overflow: hidden;
-  }
-  .hero-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(184,154,90,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(184,154,90,0.035) 1px, transparent 1px);
-    background-size: 64px 64px;
-  }
-  .hero-bg-glow {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 55% 70% at 75% 50%, rgba(184,154,90,0.06) 0%, transparent 65%);
-  }
-  .hero-watermark {
-    position: absolute; right: -2vw; top: 50%; transform: translateY(-50%);
-    width: clamp(320px, 48vw, 700px); opacity: 0.07; z-index: 0;
-    pointer-events: none;
-  }
-  .hero-content { position: relative; z-index: 1; max-width: 660px; }
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem; font-weight: 600;
-    letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold);
-    margin-bottom: 1.6rem;
-  }
-  .hero-tag::before { content:''; display:block; width:30px; height:1px; background:var(--gold); }
-  h1 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(3rem, 7.5vw, 6.2rem);
-    font-weight: 800; line-height: 0.93;
-    letter-spacing: 0.01em; margin-bottom: 1.6rem;
-  }
-  h1 .accent { color: var(--gold-light); }
-  .hero-desc {
-    font-size: 1.05rem; line-height: 1.75;
-    color: rgba(245,243,238,0.6);
-    max-width: 500px; margin-bottom: 3rem; font-weight: 300;
-  }
-  .hero-divider { width: 50px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin-bottom: 2.5rem; }
-  .services-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .pill {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-    padding: 0.45rem 1.1rem;
-    border: 1px solid var(--border);
-    color: var(--gold-light); border-radius: 1px;
-  }
-
-  /* SERVICES */
-  #services { padding: 7rem 5vw; background: var(--navy); }
-  .sec-tag {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.24em;
-    text-transform: uppercase; color: var(--gold);
-    display: flex; align-items: center; gap: 10px; margin-bottom: 0.9rem;
-  }
-  .sec-tag::before { content:''; display:block; width:28px; height:1px; background:var(--gold); }
-  .sec-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: 0.02em; margin-bottom: 0.5rem;
-  }
-  .sec-sub { color: var(--gray); font-size: 0.95rem; line-height: 1.65; max-width: 440px; margin-bottom: 3.5rem; }
-  .services-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1px; background: var(--border); border: 1px solid var(--border);
-  }
-
-  /* Medium devices (tablet portrait): 2-col grid — center the lone last card */
-  @media (min-width: 601px) and (max-width: 960px) {
-    .services-grid {
-      grid-template-columns: repeat(2, 1fr);
-      background: var(--navy-deep); /* remove gap color bleed */
-      gap: 1px;
-    }
-    .s-card:last-child:nth-child(odd) {
-      grid-column: 1 / -1;
-      max-width: 50%;
-      margin: 0 auto;
-      width: 100%;
-    }
-  }
-  .s-card {
-    background: var(--navy-deep); padding: 2.8rem 2.2rem;
-    position: relative; overflow: hidden; transition: background 0.3s;
-  }
-  .s-card::after {
-    content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
-    background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
-  }
-  .s-card:hover { background: #111d35; }
-  .s-card:hover::after { transform: scaleX(1); }
-  .s-icon { width:50px; height:50px; color:var(--gold); margin-bottom:1.6rem; }
-  .s-card h3 {
-    font-family:'Barlow Condensed',sans-serif; font-size:1.4rem; font-weight:700;
-    letter-spacing:0.06em; text-transform:uppercase; margin-bottom:0.9rem;
-  }
-  .s-card p { color:var(--gray); font-size:0.9rem; line-height:1.7; margin-bottom:1.4rem; }
-  .s-list { list-style:none; }
-  .s-list li {
-    font-size:0.83rem; color:rgba(245,243,238,0.45);
-    padding:0.35rem 0; border-bottom:1px solid rgba(184,154,90,0.08);
-    display:flex; align-items:center; gap:8px;
-  }
-  .s-list li::before { content:'—'; color:var(--gold); font-size:0.75rem; }
-
-  /* ABOUT */
-  #about { padding: 7rem 5vw; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-  .about-box {
-    border: 1px solid var(--border); background: var(--navy); padding: 2.8rem; position: relative;
-  }
-  .about-box::before {
-    content:''; position:absolute; top:-1px; left:2.5rem; right:2.5rem; height:2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .a-item { display:flex; gap:1.2rem; padding:1.2rem 0; border-bottom:1px solid rgba(184,154,90,0.1); }
-  .a-item:last-child { border-bottom:none; padding-bottom:0; }
-  .a-ic {
-    width:38px; height:38px; flex-shrink:0; background:rgba(184,154,90,0.08);
-    display:flex; align-items:center; justify-content:center; color:var(--gold);
-  }
-  .a-ic svg { width:18px; height:18px; }
-  .a-title { font-weight:600; font-size:0.92rem; margin-bottom:3px; }
-  .a-text { color:var(--gray); font-size:0.85rem; line-height:1.55; }
-
-  /* CONTACT */
-  #contact { padding: 7rem 5vw; background: var(--navy); position: relative; overflow: hidden; }
-  #contact::before {
-    content:''; position:absolute; inset:0;
-    background: radial-gradient(ellipse 60% 50% at 50% 110%, rgba(184,154,90,0.06) 0%, transparent 65%);
-  }
-  .contact-wrap { position:relative; z-index:1; }
-  .contact-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3.5rem; }
-  .c-card {
-    background: var(--navy-deep); border: 1px solid var(--border); padding: 2.2rem; position:relative;
-  }
-  .c-card::before {
-    content:''; position:absolute; top:0; left:2rem; right:2rem; height:1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .c-person { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; }
-  .c-avatar {
-    width:50px; height:50px; border-radius:50%;
-    border: 1.5px solid var(--gold); background: rgba(184,154,90,0.1);
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; color:var(--gold-light); flex-shrink:0;
-  }
-  .c-name { font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:700; letter-spacing:0.06em; }
-  .c-role { font-size:0.75rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.12em; margin-top:2px; }
-  .c-line {
-    display:flex; align-items:center; gap:12px;
-    padding:0.65rem 0; border-bottom:1px solid rgba(184,154,90,0.1);
-    font-size:0.92rem; color:var(--white); text-decoration:none;
-  }
-  .c-line:last-child { border-bottom:none; }
-  .c-line svg { width:15px; height:15px; color:var(--gold); flex-shrink:0; }
-  .c-info {
-    background: var(--navy-deep); border: 1px solid var(--border); padding: 2.2rem; position:relative;
-  }
-  .c-info::before {
-    content:''; position:absolute; top:0; left:2rem; right:2rem; height:1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .c-info-row { display:flex; gap:1rem; padding:1.1rem 0; border-bottom:1px solid rgba(184,154,90,0.1); }
-  .c-info-row:last-child { border-bottom:none; }
-  .c-info-row svg { width:18px; height:18px; color:var(--gold); flex-shrink:0; margin-top:3px; }
-  .c-lbl { font-size:0.72rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:4px; }
-  .c-val { font-size:0.92rem; line-height:1.5; }
-  .c-val a { color:var(--gold-light); text-decoration:none; }
-
-  /* FOOTER */
-  footer {
-    padding: 2rem 5vw; border-top: 1px solid var(--border);
-    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
-  }
-  .f-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
-  .fw1 { font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:800; letter-spacing:0.16em; color:var(--white); }
-  .fw2 { font-family:'Barlow Condensed',sans-serif; font-size:0.58rem; font-weight:600; letter-spacing:0.26em; color:var(--gold); text-transform:uppercase; }
-  .f-copy { font-size:0.78rem; color:var(--gray); }
-  .f-services { font-size:0.72rem; color:var(--gray); letter-spacing:0.08em; text-transform:uppercase; }
-
-  /* Animations */
-  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-  .hero-tag       { animation: fadeUp 0.6s 0.1s both; }
-  h1              { animation: fadeUp 0.6s 0.22s both; }
-  .hero-desc      { animation: fadeUp 0.6s 0.32s both; }
-  .hero-divider   { animation: fadeUp 0.6s 0.4s both; }
-  .services-pills { animation: fadeUp 0.6s 0.46s both; }
-
-  /* GALLERY — centered focus carousel */
-  #gallery { padding: 7rem 5vw; background: var(--navy); }
-
-  .g-slider-wrap { position: relative; }
-
-  /* Viewport: tall enough for the big center slide, clips sides */
-  .g-viewport {
-    overflow: hidden;
-    cursor: grab;
-    user-select: none;
-    /* extra vertical room so scaled center doesn't clip */
-    padding: 20px 0;
-    margin: 0 -5vw; /* bleed to edges for peek effect */
-  }
-  .g-viewport:active { cursor: grabbing; }
-
-  .g-track {
-    display: flex;
-    align-items: center;          /* vertically center all slides */
-    gap: 12px;
-    transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: transform;
-    padding: 0 5vw;               /* indent so side slides peek in */
-  }
-
-  /* Every slide base state — side slides */
-  .g-item {
-    flex: 0 0 28%;                /* ~28% so 3 fit with peeks */
-    height: 280px;
-    position: relative; overflow: hidden;
-    cursor: pointer; background: var(--navy-mid);
-    border-radius: 2px;
-    transition: height 0.45s ease, opacity 0.45s ease,
-                box-shadow 0.45s ease, flex-basis 0.45s ease;
-    opacity: 0.45;
-  }
-
-  /* Centre (active) slide — bigger, brighter, gold border */
-  .g-item.g-active {
-    flex: 0 0 36%;
-    height: 400px;
-    opacity: 1;
-    box-shadow: 0 0 0 2px var(--gold), 0 20px 60px rgba(0,0,0,0.5);
-  }
-
-  .g-item img {
-    width: 100%; height: 100%; object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-    pointer-events: none;
-  }
-  .g-item.g-active:hover img { transform: scale(1.04); }
-
-  /* Label always visible on active slide */
-  .g-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(12,22,40,0.9) 0%, transparent 50%);
-    display: flex; align-items: flex-end; padding: 1.2rem 1rem;
-    opacity: 0; transition: opacity 0.3s;
-  }
-  .g-item.g-active .g-overlay { opacity: 1; }
-  .g-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--gold-light);
-  }
-
-  /* Placeholder */
-  .g-placeholder {
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-deep) 100%);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 0.7rem;
-    border: 1px dashed rgba(184,154,90,0.15);
-  }
-  .g-placeholder svg { width: 28px; height: 28px; color: rgba(184,154,90,0.28); }
-  .g-placeholder span {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
-    color: rgba(184,154,90,0.28);
-  }
-
-  /* Arrow buttons */
-  .g-btn {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    width: 44px; height: 44px; z-index: 10;
-    background: rgba(12,22,40,0.85); border: 1px solid var(--border);
-    color: var(--white); font-size: 1.1rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, border-color 0.2s, opacity 0.2s;
-    border-radius: 2px;
-  }
-  .g-btn:hover { background: rgba(184,154,90,0.2); border-color: var(--gold); }
-  .g-btn-prev { left: 0; }
-  .g-btn-next { right: 0; }
-
-  /* Dots */
-  .g-dots { display: flex; gap: 6px; justify-content: center; margin-top: 1.6rem; }
-  .g-dot {
-    width: 28px; height: 3px; border-radius: 2px;
-    background: var(--border); border: none; cursor: pointer;
-    transition: background 0.2s, width 0.2s; padding: 0;
-  }
-  .g-dot.active { background: var(--gold); width: 44px; }
-
-  /* Counter hidden */
-  .g-counter { display: none; }
-
-  /* Lightbox */
-  .lightbox {
-    position: fixed; inset: 0; z-index: 999;
-    background: rgba(8,14,26,0.97);
-    display: none; align-items: center; justify-content: center;
-    padding: 2rem;
-  }
-  .lightbox.open { display: flex; }
-  .lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; border: 1px solid var(--border); }
-  .lb-close {
-    position: absolute; top: 1.5rem; right: 2rem;
-    font-size: 2rem; color: var(--white); cursor: pointer;
-    background: none; border: none; line-height: 1; opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-  .lb-close:hover { opacity: 1; }
-  .lb-nav {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    background: rgba(184,154,90,0.15); border: 1px solid var(--border);
-    color: var(--white); font-size: 1.5rem; cursor: pointer;
-    padding: 0.7rem 1rem; line-height: 1;
-    transition: background 0.2s;
-  }
-  .lb-nav:hover { background: rgba(184,154,90,0.3); }
-  .lb-prev { left: 1rem; }
-  .lb-next { right: 1rem; }
-  .lb-caption {
-    position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-    font-family: 'Barlow Condensed', sans-serif; font-size: 0.82rem;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-light);
-  }
-
-  /* TESTIMONIALS — Centred-focus carousel */
-  #testimonials { padding: 7rem 5vw; }
-
-  .t-slider-wrap { position: relative; margin-top: 3.5rem; }
-
-  /* Viewport clips the sides */
-  .t-viewport {
-    overflow: hidden;
-    cursor: grab;
-    user-select: none;
-    padding: 24px 0;
-    margin: 0 -5vw;
-  }
-  .t-viewport:active { cursor: grabbing; }
-
-  .t-track {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
-    will-change: transform;
-    padding: 0 5vw;
-  }
-
-  /* Side cards */
-  .t-card {
-    flex: 0 0 28%;
-    background: var(--navy);
-    border: 1px solid var(--border);
-    padding: 1.6rem;
-    position: relative;
-    transition: flex-basis 0.5s ease, opacity 0.5s ease,
-                box-shadow 0.5s ease, transform 0.5s ease;
-    opacity: 0.38;
-    transform: scale(0.92);
-    border-radius: 2px;
-  }
-  .t-card::before {
-    content:''; position:absolute; top:0; left:1.8rem; right:1.8rem; height:1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-
-  /* Active centre card */
-  .t-card.t-active {
-    flex: 0 0 36%;
-    opacity: 1;
-    transform: scale(1);
-    box-shadow: 0 0 0 1.5px var(--gold), 0 24px 64px rgba(0,0,0,0.45);
-    background: var(--navy-mid);
-  }
-
-  .t-quote {
-    font-size: 3rem; line-height: 1; color: var(--gold);
-    font-family: Georgia, serif; margin-bottom: 0.8rem; opacity: 0.5;
-  }
-  .t-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 1rem; }
-  .t-text {
-    font-size: 0.9rem; line-height: 1.75; color: rgba(245,243,238,0.7);
-    margin-bottom: 1.4rem; font-style: italic;
-  }
-  .t-author { display: flex; align-items: center; gap: 0.9rem; }
-  .t-avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: rgba(184,154,90,0.15); border: 1px solid var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
-    font-size: 0.85rem; color: var(--gold-light); flex-shrink: 0;
-  }
-  .t-name { font-weight: 600; font-size: 0.9rem; }
-  .t-location { font-size: 0.75rem; color: var(--gray); margin-top: 2px; }
-
-  /* Arrow buttons */
-  .t-btn {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    width: 44px; height: 44px; z-index: 10;
-    background: rgba(12,22,40,0.85); border: 1px solid var(--border);
-    color: var(--white); font-size: 1.1rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, border-color 0.2s;
-    border-radius: 2px;
-  }
-  .t-btn:hover { background: rgba(184,154,90,0.2); border-color: var(--gold); }
-  .t-btn-prev { left: 0; }
-  .t-btn-next { right: 0; }
-
-  /* Progress line indicator */
-  .t-progress-wrap {
-    display: flex; align-items: center; justify-content: center;
-    gap: 6px; margin-top: 2rem;
-  }
-  .t-seg {
-    height: 3px; border-radius: 2px;
-    background: var(--border); border: none; cursor: pointer;
-    transition: background 0.3s, width 0.3s; padding: 0;
-    width: 24px;
-  }
-  .t-seg.active { background: var(--gold); width: 44px; }
-
-  /* Dots (hidden — replaced by segments) */
-  .t-dots { display: none; }
-
-  @media (max-width: 960px) {
-    .t-card { flex: 0 0 38%; }
-    .t-card.t-active { flex: 0 0 54%; }
-    .g-item { flex: 0 0 40%; height: 220px; }
-    .g-item.g-active { flex: 0 0 55%; height: 300px; }
-  }
-  @media (max-width: 600px) {
-    .nav-links { display:none; }
-    #about { grid-template-columns:1fr; gap:2.5rem; }
-    .contact-grid { grid-template-columns:1fr; }
-    footer { flex-direction:column; text-align:center; }
-    .t-card { flex: 0 0 72%; }
-    .t-card.t-active { flex: 0 0 82%; }
-    .g-item { flex: 0 0 70%; height: 200px; }
-    .g-item.g-active { flex: 0 0 80%; height: 260px; }
-    /* Hide prev/next buttons in gallery and testimonials on mobile */
-    .g-btn, .t-btn { display: none; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORVA Security Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <meta name="author" content="Haseeb K">
+  <link rel="icon" type="image/svg+xml" href="favicon.ico" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <svg width="42" height="42" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Navy outer thick ring -->
-      <circle cx="100" cy="100" r="90" stroke="#152040" stroke-width="18" fill="none"/>
-      <!-- Gold thin outer border -->
-      <circle cx="100" cy="100" r="98" stroke="#b89a5a" stroke-width="2.5" fill="none"/>
-      <!-- Three gold curved stripes -->
-      <path d="M15 100 Q57 38 100 100 Q143 162 185 100" stroke="#b89a5a" stroke-width="11" fill="none" stroke-linecap="round"/>
-      <path d="M22 116 Q60 56 100 116 Q140 176 178 116" stroke="#b89a5a" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.65"/>
-      <path d="M8 84 Q52 22 100 84 Q148 146 192 84" stroke="#b89a5a" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.65"/>
-      <!-- White eye shape -->
-      <ellipse cx="100" cy="100" rx="55" ry="38" fill="white"/>
-      <!-- Navy iris -->
-      <circle cx="100" cy="100" r="24" fill="#152040"/>
-      <!-- White inner ring -->
-      <circle cx="100" cy="100" r="16" fill="white"/>
-      <!-- Navy pupil -->
-      <circle cx="100" cy="100" r="9" fill="#152040"/>
-      <!-- Small white highlight -->
-      <circle cx="104" cy="96" r="3" fill="white" opacity="0.6"/>
-    </svg>
-    <div class="nav-wordmark">
-      <div class="w1">ORVA</div>
-      <div class="w2">Security Systems</div>
-    </div>
+  <!-- ----- WHATSAPP FLOATING ICON ----- -->
+  <a href="https://wa.me/917356373125" 
+     class="whatsapp-float" 
+     target="_blank">
+  
+    <!-- Text -->
+    <span class="whatsapp-text">Chat on WhatsApp</span>
+  
+    <!-- Icon -->
+    <span class="whatsapp-icon">
+      <!-- WhatsApp SVG -->
+      <svg viewBox="0 0 32 32" width="24" height="24">
+        <path fill="white"
+          d="M16 .5C7.5.5.6 7.4.6 15.9c0 2.8.7 5.5 2.1 7.9L.5 31.5l7.9-2.1c2.3 1.3 4.9 2 7.6 2 8.5 0 15.4-6.9 15.4-15.4S24.5.5 16 .5zm0 28.2c-2.4 0-4.7-.7-6.7-1.9l-.5-.3-4.7 1.3 1.3-4.6-.3-.5c-1.3-2.1-2-4.5-2-6.9C3.1 8.3 9.3 2.1 16 2.1S28.9 8.3 28.9 16 22.7 28.7 16 28.7zm7.4-9.9c-.4-.2-2.3-1.1-2.6-1.2-.3-.1-.6-.2-.8.2-.2.4-.9 1.2-1.1 1.5-.2.3-.4.3-.8.1-.4-.2-1.6-.6-3-1.9-1.1-1-1.9-2.3-2.1-2.7-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.6.2-.2.3-.4.4-.6.1-.2.1-.5 0-.7-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 3 0 1.8 1.3 3.5 1.5 3.7.2.2 2.6 4 6.3 5.4.9.3 1.6.5 2.2.6.9.1 1.7.1 2.3.1.7-.1 2.3-.9 2.6-1.7.3-.8.3-1.5.2-1.7-.1-.2-.4-.3-.8-.5z"/>
+      </svg>
+    </span>
+  
   </a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#testimonials">Reviews</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-bg-glow"></div>
-  <div class="hero-watermark" aria-hidden="true">
-    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="100" cy="100" r="90" stroke="#b89a5a" stroke-width="3" fill="none"/>
-      <path d="M15 100 Q57 38 100 100 Q143 162 185 100" stroke="#b89a5a" stroke-width="11" fill="none" stroke-linecap="round"/>
-      <path d="M22 116 Q60 56 100 116 Q140 176 178 116" stroke="#b89a5a" stroke-width="7" fill="none" stroke-linecap="round"/>
-      <path d="M8 84 Q52 22 100 84 Q148 146 192 84" stroke="#b89a5a" stroke-width="7" fill="none" stroke-linecap="round"/>
-      <ellipse cx="100" cy="100" rx="55" ry="38" fill="white"/>
-      <circle cx="100" cy="100" r="24" fill="#b89a5a"/>
-      <circle cx="100" cy="100" r="16" fill="white"/>
-      <circle cx="100" cy="100" r="9" fill="#b89a5a"/>
-    </svg>
-  </div>
-  <div class="hero-content">
-    <div class="hero-tag">Professional Security Solutions</div>
-    <h1>PROTECTING WHAT<br><span class="accent">MATTERS MOST</span></h1>
-    <p class="hero-desc">ORVA Security Systems delivers expert CCTV installation, intelligent home automation, and robust networking solutions across Malappuram and beyond.</p>
-    <div class="hero-divider"></div>
-    <div class="services-pills">
-      <div class="pill">CCTV Installation</div>
-      <div class="pill">Home Automation</div>
-      <div class="pill">Networking</div>
-      <div class="pill">Sales &amp; Service</div>
-    </div>
-  </div>
-</section>
 
-<!-- SERVICES -->
-<section id="services">
-  <div class="sec-tag">What We Offer</div>
-  <h2 class="sec-title">OUR SERVICES</h2>
-  <p class="sec-sub">Comprehensive security and automation solutions tailored for homes and businesses.</p>
-  <div class="services-grid">
-    <div class="s-card">
-      <svg class="s-icon" viewBox="0 0 56 56" fill="none">
-        <rect x="6" y="17" width="30" height="20" rx="3" stroke="currentColor" stroke-width="2"/>
-        <path d="M36 23l14-7v22l-14-7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-        <circle cx="21" cy="27" r="5" stroke="currentColor" stroke-width="1.5"/>
-        <circle cx="21" cy="27" r="2" fill="currentColor"/>
-        <line x1="6" y1="43" x2="36" y2="43" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <h3>CCTV Installation</h3>
-      <p>State-of-the-art surveillance systems with HD, 4K, and night vision cameras for homes, offices, and institutions.</p>
-      <ul class="s-list">
-        <li>HD &amp; 4K camera systems</li>
-        <li>Night vision &amp; PTZ cameras</li>
-        <li>Remote mobile monitoring</li>
-        <li>DVR / NVR setup &amp; configuration</li>
-        <li>Annual maintenance contracts</li>
-      </ul>
-    </div>
-    <div class="s-card">
-      <svg class="s-icon" viewBox="0 0 56 56" fill="none">
-        <path d="M8 28L28 10l20 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M14 24v18h28V24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <rect x="22" y="32" width="12" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
-        <circle cx="39" cy="20" r="4" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M39 14v-3M39 27v-3M33 20h-3M48 20h-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <h3>Home Automation</h3>
-      <p>Transform your home into a smart living space with intelligent lighting, climate, security, and entertainment control.</p>
-      <ul class="s-list">
-        <li>Smart lighting control</li>
-        <li>Automated door locks &amp; video doorbell</li>
-        <li>Climate &amp; AC automation</li>
-        <li>Smart curtains &amp; blinds</li>
-        <li>Voice &amp; app control</li>
-      </ul>
-    </div>
-    <div class="s-card">
-      <svg class="s-icon" viewBox="0 0 56 56" fill="none">
-        <circle cx="28" cy="28" r="5" stroke="currentColor" stroke-width="2"/>
-        <circle cx="10" cy="16" r="4" stroke="currentColor" stroke-width="1.5"/>
-        <circle cx="46" cy="16" r="4" stroke="currentColor" stroke-width="1.5"/>
-        <circle cx="10" cy="40" r="4" stroke="currentColor" stroke-width="1.5"/>
-        <circle cx="46" cy="40" r="4" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="14" y1="18" x2="24" y2="25" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="42" y1="18" x2="32" y2="25" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="14" y1="38" x2="24" y2="31" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="42" y1="38" x2="32" y2="31" stroke="currentColor" stroke-width="1.5"/>
-      </svg>
-      <h3>Networking</h3>
-      <p>Fast, reliable, and secure network infrastructure for homes, offices, and commercial spaces of all sizes.</p>
-      <ul class="s-list">
-        <li>Wi-Fi design &amp; installation</li>
-        <li>Structured cabling &amp; LAN</li>
-        <li>Firewall &amp; router configuration</li>
-        <li>Network troubleshooting</li>
-        <li>CCTV network integration</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-box">
-    <ul style="list-style:none;">
-      <li class="a-item">
-        <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <div><div class="a-title">Certified &amp; Experienced</div><div class="a-text">Trained professionals with hands-on experience across residential and commercial projects.</div></div>
-      </li>
-      <li class="a-item">
-        <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-        <div><div class="a-title">Fast Installation &amp; Support</div><div class="a-text">Quick turnaround times and after-sales service always available for all customers.</div></div>
-      </li>
-      <li class="a-item">
-        <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <div><div class="a-title">Customer-First Approach</div><div class="a-text">We listen to your needs and design solutions that fit your budget and requirements perfectly.</div></div>
-      </li>
-      <li class="a-item">
-        <div class="a-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-        <div><div class="a-title">Quality Brands Only</div><div class="a-text">We source from Hikvision, Dahua, CP Plus, and other trusted brands for lasting performance.</div></div>
-      </li>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <!-- ORVA Eye SVG -->
+      <div class="nav-">
+        <img src="logo.png" alt="Logo" />
+      </div>
+      <div class="nav-brand">ORVA<span>Security Systems</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
     </ul>
-  </div>
-  <div>
-    <div class="sec-tag">Why Choose Us</div>
-    <h2 class="sec-title">SECURITY YOU CAN <span style="color:var(--gold-light)">TRUST</span></h2>
-    <p class="sec-sub" style="max-width:100%; margin-bottom:1.2rem;">ORVA Security Systems brings local expertise and professional-grade technology together. Based in Malappuram, we understand the unique needs of homes and businesses in the region.</p>
-    <p style="color:var(--gray); font-size:0.92rem; line-height:1.7;">From a single camera to a fully automated smart home, we handle every project with the same dedication and precision. Our Sales &amp; Service team is always just a call away.</p>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section id="gallery">
-  <div class="sec-tag">Our Work</div>
-  <h2 class="sec-title">PROJECT GALLERY</h2>
-  <p class="sec-sub">A glimpse of our installations across homes and businesses in Malappuram.</p>
-
-  <!--
-    HOW TO ADD YOUR PHOTOS — just duplicate a .g-item block and set:
-      <img src="YOUR-IMAGE.jpg" alt="Description">
-    inside it. The slider handles any number of images automatically.
-  -->
-  <div class="g-slider-wrap">
-    <button class="g-btn g-btn-prev" id="gPrev" aria-label="Previous">&#8592;</button>
-    <div class="g-viewport" id="gViewport">
-      <div class="g-track" id="gTrack">
-
-        <div class="g-item" data-label="CCTV Installation — Residence">
-          <div class="g-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Add your photo here</span>
-          </div>
-          <div class="g-overlay"><span class="g-label">CCTV Installation — Residence</span></div>
-        </div>
-
-        <div class="g-item" data-label="Camera Setup — Office">
-          <div class="g-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Add your photo here</span>
-          </div>
-          <div class="g-overlay"><span class="g-label">Camera Setup — Office</span></div>
-        </div>
-
-        <div class="g-item" data-label="Network Setup">
-          <div class="g-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Add your photo here</span>
-          </div>
-          <div class="g-overlay"><span class="g-label">Network Setup</span></div>
-        </div>
-
-        <div class="g-item" data-label="Home Automation">
-          <div class="g-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Add your photo here</span>
-          </div>
-          <div class="g-overlay"><span class="g-label">Home Automation</span></div>
-        </div>
-
-        <div class="g-item" data-label="Shop Installation">
-          <div class="g-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Add your photo here</span>
-          </div>
-          <div class="g-overlay"><span class="g-label">Shop Installation</span></div>
-        </div>
-
-        <div class="g-item" data-label="DVR / NVR Setup">
-          <div class="g-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Add your photo here</span>
-          </div>
-          <div class="g-overlay"><span class="g-label">DVR / NVR Setup</span></div>
-        </div>
-
-        <div class="g-item" data-label="Outdoor Camera">
-          <div class="g-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Add your photo here</span>
-          </div>
-          <div class="g-overlay"><span class="g-label">Outdoor Camera</span></div>
-        </div>
-
-        <div class="g-item" data-label="Smart Home Setup">
-          <div class="g-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Add your photo here</span>
-          </div>
-          <div class="g-overlay"><span class="g-label">Smart Home Setup</span></div>
-        </div>
-
-      </div>
-      <div class="g-counter" id="gCounter">1 / 8</div>
+    <div class="hamburger" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
     </div>
-    <button class="g-btn g-btn-next" id="gNext" aria-label="Next">&#8594;</button>
-  </div>
-  <div class="g-dots" id="gDots"></div>
-</section>
+  </nav>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-  <button class="lb-close" onclick="closeLightbox()">&times;</button>
-  <button class="lb-nav lb-prev" onclick="event.stopPropagation(); shiftLightbox(-1)">&#8592;</button>
-  <img id="lb-img" src="" alt="">
-  <button class="lb-nav lb-next" onclick="event.stopPropagation(); shiftLightbox(1)">&#8594;</button>
-  <div class="lb-caption" id="lb-cap"></div>
-</div>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="sec-tag">What Clients Say</div>
-  <h2 class="sec-title">TESTIMONIALS</h2>
-  <p class="sec-sub">Real feedback from our happy customers across Malappuram.</p>
-
-  <!--
-    ═══════════════════════════════════════════════════════
-    HOW TO EDIT TESTIMONIALS:
-    Each .t-card is one review. Change the text inside
-    .t-text, .t-name, and .t-location to your real reviews.
-    Add or remove cards as needed.
-    ═══════════════════════════════════════════════════════
-  -->
-  <div class="t-slider-wrap">
-    <button class="t-btn t-btn-prev" id="tPrev" aria-label="Previous">&#8592;</button>
-    <div class="t-viewport" id="tViewport">
-      <div class="t-track" id="tTrack">
-
-        <div class="t-card">
-          <div class="t-quote">"</div>
-          <div class="t-stars">★★★★★</div>
-          <p class="t-text">ORVA installed 8 cameras at my house and the quality is excellent. Night vision is crystal clear and I can monitor everything from my phone. Very professional team and fast work.</p>
-          <div class="t-author">
-            <div class="t-avatar">AK</div>
-            <div>
-              <div class="t-name">Abdul Kareem</div>
-              <div class="t-location">Malappuram</div>
-            </div>
-          </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Professional Security Solutions</div>
+      <h1 class="hero-title">
+        Protecting What<br><em>Matters Most</em>
+      </h1>
+      <p class="hero-sub">
+        Professional CCTV installation, intelligent home automation, and reliable networking solutions — delivered with expertise across Malappuram and beyond.
+      </p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Get Free Consultation</a>
+        <a href="#services" class="btn-outline">Our Services</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">5★</div>
+          <div class="stat-label">Client Rating</div>
         </div>
-
-        <div class="t-card">
-          <div class="t-quote">"</div>
-          <div class="t-stars">★★★★★</div>
-          <p class="t-text">We got our shop fitted with a full CCTV system. The installation was clean and neat, no mess at all. Price was very reasonable and the after-sales support is great. Highly recommend!</p>
-          <div class="t-author">
-            <div class="t-avatar">RS</div>
-            <div>
-              <div class="t-name">Rasheed Sulaiman</div>
-              <div class="t-location">Tirur</div>
-            </div>
-          </div>
+        <div class="stat">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Support</div>
         </div>
-
-        <div class="t-card">
-          <div class="t-quote">"</div>
-          <div class="t-stars">★★★★★</div>
-          <p class="t-text">Got smart lighting and automated door lock installed. The team explained everything clearly and the app works perfectly. My home feels very modern now. Thank you ORVA!</p>
-          <div class="t-author">
-            <div class="t-avatar">FN</div>
-            <div>
-              <div class="t-name">Fathima Noufal</div>
-              <div class="t-location">Perinthalmanna</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="t-card">
-          <div class="t-quote">"</div>
-          <div class="t-stars">★★★★★</div>
-          <p class="t-text">They set up our entire office network from scratch — structured cabling, Wi-Fi, and firewall. Zero downtime since. Very knowledgeable and punctual team. Will use again.</p>
-          <div class="t-author">
-            <div class="t-avatar">MJ</div>
-            <div>
-              <div class="t-name">Mohammed Jaleel</div>
-              <div class="t-location">Manjeri</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="t-card">
-          <div class="t-quote">"</div>
-          <div class="t-stars">★★★★★</div>
-          <p class="t-text">Very happy with the service. Called them for a camera issue and they responded the same day. Honest pricing and friendly staff. Best security company in Malappuram.</p>
-          <div class="t-author">
-            <div class="t-avatar">SH</div>
-            <div>
-              <div class="t-name">Suhaib Hassan</div>
-              <div class="t-location">Kondotty</div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
-    <button class="t-btn t-btn-next" id="tNext" aria-label="Next">&#8594;</button>
-  </div>
-  <div class="t-progress-wrap" id="tProgress"></div>
-  <div class="t-dots" id="tDots"></div>
-</section>
+    <div class="hero-visual">
+      <!--
+      <div class="hero-eye-ring">
+        <img src="logo.png" alt="Logo" />
+      </div>
+      -->
+    </div>
+  </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-wrap">
-    <div class="sec-tag">Reach Out</div>
-    <h2 class="sec-title">CONTACT US</h2>
-    <p class="sec-sub">Get in touch for a free consultation or site visit. We're here to help.</p>
-    <div class="contact-grid">
-      <div style="display:flex; flex-direction:column; gap:1.5rem;">
-        <div class="c-card">
-          <div class="c-person">
-            <div class="c-avatar">JM</div>
-            <div><div class="c-name">JALAL MUHAMMED</div><div class="c-role">Sales &amp; Service</div></div>
-          </div>
-          <a href="tel:+917356373125" class="c-line">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            +91 73563 73125
-          </a>
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-header reveal">
+      <div class="section-tag">What We Do</div>
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-desc">From surveillance to smart living — we provide end-to-end security and automation solutions tailored to homes and businesses.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0121 8.845v6.31a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
         </div>
-        <div class="c-card">
-          <div class="c-person">
-            <div class="c-avatar">MS</div>
-            <div><div class="c-name">MUHAMMED SWALIH</div><div class="c-role">Sales &amp; Service</div></div>
-          </div>
-          <a href="tel:+918592027004" class="c-line">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            +91 85920 27004
-          </a>
+        <div class="service-title">CCTV Installation</div>
+        <p class="service-text">HD and 4K surveillance cameras for homes, offices, warehouses, and commercial spaces. Remote viewing, night vision, and motion alerts included.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="service-title">Home Automation</div>
+        <p class="service-text">Smart lighting, automated gates, door locks, fans, and appliances — all controlled from your smartphone. Make your home truly intelligent.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+        </div>
+        <div class="service-title">Networking</div>
+        <p class="service-text">Structured cabling, Wi-Fi coverage planning, router setup, and enterprise-grade networking for homes and offices. Fast, stable, and secure.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="service-title">Sales & Service</div>
+        <p class="service-text">We supply genuine branded security equipment and back every installation with after-sales service, maintenance, and quick-response support.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-layout">
+      <div class="about-visual reveal">
+        <div class="about-card-main">
+          <h3>Built on <span>Trust &</span> Expertise</h3>
+          <p>ORVA Security Systems was founded with a single purpose — protecting what matters to you. Based in Mudikkode, Malappuram, we bring professional-grade security and smart technology to your doorstep.</p>
+        </div>
+        <div class="about-card-accent">
+          <div class="acc-num">100%</div>
+          <div class="acc-label">Client Satisfaction<br>Guaranteed on Every Project</div>
         </div>
       </div>
-      <div class="c-info">
-        <div class="c-info-row">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <div class="about-text reveal">
+        <div class="section-tag">About Us</div>
+        <h2 class="section-title">Your Local Security Experts</h2>
+        <p class="section-desc">With deep roots in Malappuram and a passion for cutting-edge technology, ORVA Security Systems delivers installations that are built to last — and service that never stops.</p>
+        <ul class="feature-list" style="margin-top: 2rem;">
+          <li>Certified installation technicians with hands-on field experience</li>
+          <li>Quality-assured equipment from reputable global brands</li>
+          <li>Transparent pricing — no hidden charges, ever</li>
+          <li>On-site consultation and custom solution design</li>
+          <li>Post-installation support and annual maintenance contracts</li>
+          <li>Serving homes, businesses, schools, and institutions</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header reveal">
+      <div class="section-tag">Our Work</div>
+      <h2 class="section-title">Project Gallery</h2>
+      <p class="section-desc">A glimpse of our installations — from compact home setups to large-scale commercial deployments across Malappuram.</p>
+    </div>
+<!--
+    <div class="gallery-filter reveal">
+      <button class="filter-btn active">All Projects</button>
+      <button class="filter-btn">CCTV</button>
+      <button class="filter-btn">Automation</button>
+      <button class="filter-btn">Networking</button>
+    </div>
+-->
+    <div class="gallery-grid reveal">
+
+      <div class="gallery-item">
+        <div class="gallery-placeholder gp-cctv">
+          <svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0121 8.845v6.31a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+          <span style="font-size:0.8rem;color:var(--text-light);font-weight:600">Commercial CCTV Setup</span>
+        </div>
+        <div class="gallery-tag">CCTV</div>
+        <div class="gallery-label">Commercial Surveillance — 16-Camera Setup</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-placeholder gp-auto">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span style="font-size:0.8rem;color:var(--text-light);font-weight:600">Smart Home</span>
+        </div>
+        <div class="gallery-tag">Automation</div>
+        <div class="gallery-label">Smart Home Lighting & Gate Control</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-placeholder gp-network">
+          <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+          <span style="font-size:0.8rem;color:var(--text-light);font-weight:600">Office Networking</span>
+        </div>
+        <div class="gallery-tag">Networking</div>
+        <div class="gallery-label">Structured LAN Cabling — Office Building</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-placeholder gp-cctv">
+          <svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0121 8.845v6.31a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+          <span style="font-size:0.8rem;color:var(--text-light);font-weight:600">Residential CCTV</span>
+        </div>
+        <div class="gallery-tag">CCTV</div>
+        <div class="gallery-label">Residential 4-Camera HD Installation</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="gallery-placeholder gp-auto">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span style="font-size:0.8rem;color:var(--text-light);font-weight:600">Access Control</span>
+        </div>
+        <div class="gallery-tag">Automation</div>
+        <div class="gallery-label">Biometric Access Control System</div>
+      </div>
+
+    </div>
+    
+    <!--
+    <p class="gallery-note reveal">📸 More project photos coming soon — follow us for updates.</p>
+    -->
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-header reveal">
+      <div class="section-tag">Client Reviews</div>
+      <h2 class="section-title">What Our Clients Say</h2>
+      <p class="section-desc">Hundreds of families and businesses in Malappuram trust ORVA Security Systems — here's what a few of them have to say.</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Excellent work! They installed 8 cameras at my shop and the quality is outstanding. The team was very professional and completed the job on time. Highly recommended!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AR</div>
           <div>
-            <div class="c-lbl">Email</div>
-            <div class="c-val"><a href="mailto:orvasecuritysystems@gmail.com">orvasecuritysystems@gmail.com</a></div>
+            <div class="author-name">Abdul Rahman</div>
+            <div class="author-loc">Business Owner · Malappuram</div>
           </div>
         </div>
-        <div class="c-info-row">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"We got our home automated with smart lights and a gate controller. Now I can control everything from my phone. ORVA really knows their stuff — brilliant service!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">FM</div>
           <div>
-            <div class="c-lbl">Address</div>
-            <div class="c-val">Village Road, Mudikkode,<br>Malappuram, Kerala</div>
+            <div class="author-name">Fathima Nishad</div>
+            <div class="author-loc">Homeowner · Tirur</div>
           </div>
         </div>
-        <div class="c-info-row" style="border-bottom:none;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"The networking setup they did for our office is flawless. No more dead zones, fast internet everywhere. Jalal and Swalih are very knowledgeable and responsive."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SK</div>
           <div>
-            <div class="c-lbl">Working Hours</div>
-            <div class="c-val">Mon – Sat: 9:00 AM – 7:00 PM<br><span style="color:var(--gold); font-size:0.82rem;">Emergency support available 24/7</span></div>
+            <div class="author-name">Shabeeb K</div>
+            <div class="author-loc">Office Manager · Kondotty</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Very satisfied with the CCTV installation at my house. Clear footage even at night. They came on time, cleaned up after, and showed me how to use the app. 5 stars!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MH</div>
+          <div>
+            <div class="author-name">Mohammed Haneef</div>
+            <div class="author-loc">Resident · Manjeri</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"After-sales support is amazing. Had a small issue months later and they responded immediately and fixed it for free. That's the kind of trust you want from a security company."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">NP</div>
+          <div>
+            <div class="author-name">Naseef P</div>
+            <div class="author-loc">Shop Owner · Perinthalmanna</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Professional, affordable, and reliable. ORVA set up a complete security system for our school — cameras, intercom, and networking. Couldn't be happier with the result."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">ZA</div>
+          <div>
+            <div class="author-name">Zainab Aziz</div>
+            <div class="author-loc">School Administrator · Malappuram</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <a href="#" class="f-logo">
-    <svg width="32" height="32" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="100" cy="100" r="90" stroke="#152040" stroke-width="18" fill="none"/>
-      <circle cx="100" cy="100" r="98" stroke="#b89a5a" stroke-width="2.5" fill="none"/>
-      <path d="M15 100 Q57 38 100 100 Q143 162 185 100" stroke="#b89a5a" stroke-width="11" fill="none" stroke-linecap="round"/>
-      <path d="M22 116 Q60 56 100 116 Q140 176 178 116" stroke="#b89a5a" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.65"/>
-      <path d="M8 84 Q52 22 100 84 Q148 146 192 84" stroke="#b89a5a" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.65"/>
-      <ellipse cx="100" cy="100" rx="55" ry="38" fill="white"/>
-      <circle cx="100" cy="100" r="24" fill="#152040"/>
-      <circle cx="100" cy="100" r="16" fill="white"/>
-      <circle cx="100" cy="100" r="9" fill="#152040"/>
-    </svg>
-    <div>
-      <div class="fw1">ORVA</div>
-      <div class="fw2">Security Systems</div>
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-layout">
+      <div class="contact-info reveal">
+        <div class="section-tag">Get In Touch</div>
+        <h2 class="section-title">Let's Secure Your Space</h2>
+        <p>Ready for a free consultation? Reach out to our team and we'll help design the perfect security solution for your home or business.</p>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.93 9.18 19.79 19.79 0 01.87 4.55 2 2 0 012.87 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Call Us</div>
+            <div class="contact-detail-val">
+              <a href="tel:+917356373125">Muhammed Jalal: +91 73563 73125</a><br>
+              <a href="tel:+918111997004">Muhammed Swalih: +91 811199 7004</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Email</div>
+            <div class="contact-detail-val"><a href="mailto:orvasecuritysystems@gmail.com">orvasecuritysystems@gmail.com</a></div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Location</div>
+            <div class="contact-detail-val">Village Road, Mudikkode, Malappuram</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal">
+        <div class="form-title">Send Us a Message</div>
+        <form id="contactForm" action="https://formspree.io/f/mqenkqpg" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" name="name" placeholder="Mohammed Ali" required />
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" name="phone" placeholder="+91 9876543210" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Service Interested In</label>
+            <select name="service">
+              <option value="">Select a service...</option>
+              <option value="CCTV Installation">CCTV Installation</option>
+              <option value="Home Automation">Home Automation</option>
+              <option value="Networking">Networking</option>
+              <option value="Sales & Service">Sales & Service</option>
+              <option value="Multiple / Package">Multiple Services</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Your Message</label>
+            <textarea name="message" placeholder="Tell us about your project — type of space, requirements, budget, etc."></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            Send Message
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h4>Message Sent!</h4>
+          <p>Thanks for reaching out. We'll get back to you within 24 hours.</p>
+        </div>
+      </div>
     </div>
-  </a>
-  <div class="f-copy">© 2026 ORVA Security Systems. All rights reserved.</div>
-  <div class="f-services">CCTV · Home Automation · Networking</div>
-</footer>
+  </section>
 
-<script>
-  // ══════════════════════════════════════════
-  //  GALLERY — Centred-Focus Carousel (infinite loop, no counter)
-  // ══════════════════════════════════════════
-  (function() {
-    const viewport = document.getElementById('gViewport');
-    const track    = document.getElementById('gTrack');
-    const dotsWrap = document.getElementById('gDots');
-    const btnPrev  = document.getElementById('gPrev');
-    const btnNext  = document.getElementById('gNext');
-    if (!track) return;
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">ORVA<span>Security Systems</span></div>
+      </div>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 ORVA Security Systems. All rights reserved.</div>
+      <div class="footer-tagline">CCTV · Home Automation · <span>Networking</span></div>
+    </div>
+  </footer>
 
-    const origItems = Array.from(track.querySelectorAll('.g-item'));
-    const total     = origItems.length;
-    let active      = 0;
-    let isDragging  = false, startX = 0, dragDelta = 0;
-    let autoTimer;
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Build dots
-    function buildDots() {
-      dotsWrap.innerHTML = '';
-      origItems.forEach((_, i) => {
-        const d = document.createElement('button');
-        d.className = 'g-dot' + (i === active ? ' active' : '');
-        d.onclick = () => goTo(i);
-        dotsWrap.appendChild(d);
+    // Gallery filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
       });
+    });
+
+    // Hamburger menu
+    function toggleMenu(el) {
+      const links = document.querySelector('.nav-links');
+      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '72px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = '#f8f5ef';
+      links.style.padding = '1.5rem 5%';
+      links.style.borderBottom = '1px solid rgba(181,150,74,0.2)';
+      links.style.gap = '1rem';
     }
 
-    function updateDots() {
-      dotsWrap.querySelectorAll('.g-dot')
-        .forEach((d, i) => d.classList.toggle('active', i === active));
-    }
-
-    function highlightActive() {
-      const allItems = track.querySelectorAll('.g-item');
-      allItems.forEach(el => el.classList.remove('g-active'));
-      // active index within cloned track
-      const cloneOffset = total; // we prepend total clones
-      allItems[cloneOffset + active].classList.add('g-active');
-    }
-
-    function goTo(n, instant) {
-      // wrap around
-      active = ((n % total) + total) % total;
-      highlightActive();
-      updateDots();
-
-      requestAnimationFrame(() => {
-        const vpW      = viewport.offsetWidth;
-        const allItems = Array.from(track.querySelectorAll('.g-item'));
-        const cloneOffset = total;
-        const targetEl = allItems[cloneOffset + active];
-        let offsetLeft = 0;
-        for (let i = 0; i < cloneOffset + active; i++) {
-          offsetLeft += allItems[i].offsetWidth + 12;
+    // Formspree AJAX submit
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('.form-submit');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('formSuccess').style.display = 'block';
+        } else {
+          btn.textContent = 'Failed — Try Again';
+          btn.disabled = false;
         }
-        const centreOffset = offsetLeft - (vpW / 2) + (targetEl.offsetWidth / 2);
-        track.style.transition = instant ? 'none' : 'transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94)';
-        track.style.transform  = `translateX(${-Math.max(0, centreOffset)}px)`;
-      });
-    }
-
-    // Clone slides for seamless infinite
-    function buildClones() {
-      const clonesBefore = origItems.map(el => { const c = el.cloneNode(true); c.classList.add('g-clone'); return c; });
-      const clonesAfter  = origItems.map(el => { const c = el.cloneNode(true); c.classList.add('g-clone'); return c; });
-      clonesBefore.reverse().forEach(c => track.insertBefore(c, track.firstChild));
-      clonesAfter.forEach(c => track.appendChild(c));
-    }
-
-    buildClones();
-    buildDots();
-
-    btnPrev.onclick = () => { resetAuto(); goTo(active - 1); };
-    btnNext.onclick = () => { resetAuto(); goTo(active + 1); };
-
-    // Auto-slide
-    function startAuto() {
-      autoTimer = setInterval(() => goTo(active + 1), 3500);
-    }
-    function resetAuto() {
-      clearInterval(autoTimer);
-      startAuto();
-    }
-
-    // Drag / Swipe
-    function onDragStart(x) { isDragging = true; startX = x; dragDelta = 0; track.style.transition = 'none'; }
-    function onDragMove(x) { if (!isDragging) return; dragDelta = x - startX; }
-    function onDragEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      if      (dragDelta < -50) { resetAuto(); goTo(active + 1); }
-      else if (dragDelta >  50) { resetAuto(); goTo(active - 1); }
-      else goTo(active);
-    }
-
-    viewport.addEventListener('mousedown',  e => onDragStart(e.clientX));
-    window.addEventListener  ('mousemove',  e => { if (isDragging) dragDelta = e.clientX - startX; });
-    window.addEventListener  ('mouseup',    ()  => onDragEnd());
-    viewport.addEventListener('touchstart', e => onDragStart(e.touches[0].clientX), { passive: true });
-    viewport.addEventListener('touchmove',  e => { if (isDragging) dragDelta = e.touches[0].clientX - startX; }, { passive: true });
-    viewport.addEventListener('touchend',   ()  => onDragEnd());
-
-    // Pause auto on hover
-    viewport.addEventListener('mouseenter', () => clearInterval(autoTimer));
-    viewport.addEventListener('mouseleave', startAuto);
-
-    // Click items
-    const allItemsNow = () => Array.from(track.querySelectorAll('.g-item'));
-    track.addEventListener('click', e => {
-      if (Math.abs(dragDelta) >= 8) return;
-      const item = e.target.closest('.g-item');
-      if (!item) return;
-      const items = allItemsNow();
-      const cloneOffset = total;
-      const idx = items.indexOf(item);
-      if (idx < 0) return;
-      // Normalize to real index
-      let realIdx = ((idx - cloneOffset) % total + total) % total;
-      if (realIdx !== active) { resetAuto(); goTo(realIdx); return; }
-      openLightbox(active);
+      } catch {
+        btn.textContent = 'Error — Try Again';
+        btn.disabled = false;
+      }
     });
-
-    // Keyboard
-    document.addEventListener('keydown', e => {
-      if (document.getElementById('lightbox').classList.contains('open')) return;
-      if (e.key === 'ArrowLeft')  { resetAuto(); goTo(active - 1); }
-      if (e.key === 'ArrowRight') { resetAuto(); goTo(active + 1); }
-    });
-
-    window.addEventListener('resize', () => goTo(active, true));
-
-    // Init
-    setTimeout(() => { goTo(0, true); startAuto(); }, 50);
-  })();
-
-  // ══════════════════════════════════════════
-  //  LIGHTBOX
-  // ══════════════════════════════════════════
-  let lbIndex = 0;
-  const lbItems = () => Array.from(document.querySelectorAll('.g-item:not(.g-clone)'));
-
-  function openLightbox(i) {
-    const items = lbItems();
-    if (!items[i]) return;
-    const img = items[i].querySelector('img');
-    if (!img) return;
-    lbIndex = i;
-    document.getElementById('lb-img').src = img.src;
-    document.getElementById('lb-cap').textContent = items[i].dataset.label || '';
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox(e) {
-    if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lb-close')) return;
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function shiftLightbox(dir) {
-    const imgs = lbItems().filter(el => el.querySelector('img'));
-    if (!imgs.length) return;
-    const imgIdx = imgs.findIndex(el => el.querySelector('img')?.src === document.getElementById('lb-img').src);
-    const next = ((imgIdx + dir) % imgs.length + imgs.length) % imgs.length;
-    const item = imgs[next];
-    document.getElementById('lb-img').src = item.querySelector('img').src;
-    document.getElementById('lb-cap').textContent = item.dataset.label || '';
-  }
-
-  document.addEventListener('keydown', e => {
-    if (!document.getElementById('lightbox').classList.contains('open')) return;
-    if (e.key === 'Escape')     { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
-    if (e.key === 'ArrowLeft')  shiftLightbox(-1);
-    if (e.key === 'ArrowRight') shiftLightbox(1);
-  });
-
-  // ══════════════════════════════════════════
-  //  TESTIMONIAL SLIDER — Centred-Focus Carousel
-  // ══════════════════════════════════════════
-  (function() {
-    const viewport  = document.getElementById('tViewport');
-    const track     = document.getElementById('tTrack');
-    const progress  = document.getElementById('tProgress');
-    const btnPrev   = document.getElementById('tPrev');
-    const btnNext   = document.getElementById('tNext');
-    if (!track) return;
-
-    const origCards = Array.from(track.querySelectorAll('.t-card'));
-    const total     = origCards.length;
-    let active      = 0;
-    let isDragging  = false, startX = 0, dragDelta = 0;
-    let autoTimer;
-
-    // Build progress segments
-    function buildProgress() {
-      progress.innerHTML = '';
-      origCards.forEach((_, i) => {
-        const s = document.createElement('button');
-        s.className = 't-seg' + (i === active ? ' active' : '');
-        s.onclick = () => { resetAuto(); goTo(i); };
-        progress.appendChild(s);
-      });
-    }
-
-    function updateProgress() {
-      progress.querySelectorAll('.t-seg')
-        .forEach((s, i) => s.classList.toggle('active', i === active));
-    }
-
-    function highlightActive() {
-      const allCards = track.querySelectorAll('.t-card');
-      allCards.forEach(el => el.classList.remove('t-active'));
-      allCards[total + active].classList.add('t-active');
-    }
-
-    function goTo(n, instant) {
-      active = ((n % total) + total) % total;
-      highlightActive();
-      updateProgress();
-
-      requestAnimationFrame(() => {
-        const vpW     = viewport.offsetWidth;
-        const allCards = Array.from(track.querySelectorAll('.t-card'));
-        const targetEl = allCards[total + active];
-        let offsetLeft = 0;
-        for (let i = 0; i < total + active; i++) {
-          offsetLeft += allCards[i].offsetWidth + 16; // 16 = gap
-        }
-        const centreOffset = offsetLeft - (vpW / 2) + (targetEl.offsetWidth / 2);
-        track.style.transition = instant ? 'none' : 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
-        track.style.transform  = `translateX(${-Math.max(0, centreOffset)}px)`;
-      });
-    }
-
-    // Build clones for seamless loop
-    function buildClones() {
-      const before = origCards.map(el => { const c = el.cloneNode(true); c.classList.add('t-clone'); return c; });
-      const after  = origCards.map(el => { const c = el.cloneNode(true); c.classList.add('t-clone'); return c; });
-      before.reverse().forEach(c => track.insertBefore(c, track.firstChild));
-      after.forEach(c => track.appendChild(c));
-    }
-
-    buildClones();
-    buildProgress();
-
-    btnPrev.onclick = () => { resetAuto(); goTo(active - 1); };
-    btnNext.onclick = () => { resetAuto(); goTo(active + 1); };
-
-    function startAuto() { autoTimer = setInterval(() => goTo(active + 1), 4500); }
-    function resetAuto() { clearInterval(autoTimer); startAuto(); }
-
-    // Drag / Swipe
-    function onDragStart(x) { isDragging = true; startX = x; dragDelta = 0; track.style.transition = 'none'; }
-    function onDragMove(x) { if (!isDragging) return; dragDelta = x - startX; }
-    function onDragEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      if      (dragDelta < -50) { resetAuto(); goTo(active + 1); }
-      else if (dragDelta >  50) { resetAuto(); goTo(active - 1); }
-      else goTo(active);
-    }
-
-    viewport.addEventListener('mousedown',  e => onDragStart(e.clientX));
-    window.addEventListener  ('mousemove',  e => { if (isDragging) dragDelta = e.clientX - startX; });
-    window.addEventListener  ('mouseup',    ()  => onDragEnd());
-    viewport.addEventListener('touchstart', e => onDragStart(e.touches[0].clientX), { passive: true });
-    viewport.addEventListener('touchmove',  e => { if (isDragging) dragDelta = e.touches[0].clientX - startX; }, { passive: true });
-    viewport.addEventListener('touchend',   ()  => onDragEnd());
-
-    // Pause on hover
-    viewport.addEventListener('mouseenter', () => clearInterval(autoTimer));
-    viewport.addEventListener('mouseleave', startAuto);
-
-    // Click non-active cards to centre them
-    track.addEventListener('click', e => {
-      if (Math.abs(dragDelta) >= 8) return;
-      const card = e.target.closest('.t-card');
-      if (!card) return;
-      const allCards = Array.from(track.querySelectorAll('.t-card'));
-      const idx = allCards.indexOf(card);
-      const realIdx = ((idx - total) % total + total) % total;
-      if (realIdx !== active) { resetAuto(); goTo(realIdx); }
-    });
-
-    window.addEventListener('resize', () => goTo(active, true));
-
-    setTimeout(() => { goTo(0, true); startAuto(); }, 60);
-  })();
-</script>
+  </script>
 </body>
 </html>
