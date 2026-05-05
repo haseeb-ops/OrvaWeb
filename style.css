@@ -72,10 +72,11 @@
 
 .whatsapp-float:hover .whatsapp-icon {
   transform: scale(1.1);
+  animation: none;
 }
 
 /* Floating Animation */
-.whatsapp-icon {
+.whatsapp-icon  {
   animation: float 2s ease-in-out infinite;
 }
 
@@ -628,152 +629,266 @@
     .author-name { font-weight: 700; color: var(--white); font-size: 0.9rem; }
     .author-loc { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 2px; }
 
-    /* ── CONTACT ── */
-    #contact { background: var(--cream); }
+   /* ── CONTACT ── */
+#contact { 
+  background: var(--cream); 
+}
 
-    .contact-layout {
-      display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start;
-    }
+.contact-layout {
+  display: grid; 
+  /* Default: Stacked for mobile */
+  grid-template-columns: 1fr; 
+  gap: 3rem; 
+  align-items: start;
+}
 
-    .contact-info h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem; color: var(--navy); margin-bottom: 1rem; letter-spacing: 1px;
-    }
+.contact-info h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem; /* Adjusted for better mobile scaling */
+  color: var(--navy); 
+  margin-bottom: 1rem; 
+  letter-spacing: 1px;
+}
 
-    .contact-info p {
-      font-size: 0.95rem; color: var(--text-light); line-height: 1.7; margin-bottom: 2rem;
-    }
+.contact-info p {
+  font-size: 0.95rem; 
+  color: var(--text-light); 
+  line-height: 1.7; 
+  margin-bottom: 2rem;
+}
 
-    .contact-card {
-      background: var(--white);
-      border-radius: 10px; padding: 1.5rem;
-      display: flex; align-items: center; gap: 1rem;
-      margin-bottom: 1rem;
-      border: 1px solid var(--gray-soft);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .contact-card:hover {
-      border-color: rgba(181,150,74,0.4);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    }
+.contact-card {
+  background: var(--white);
+  border-radius: 10px; 
+  padding: 1.25rem;
+  display: flex; 
+  align-items: center; 
+  gap: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--gray-soft);
+  transition: all 0.3s ease;
+}
 
-    .contact-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      background: var(--navy); display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .contact-icon svg { width: 20px; height: 20px; stroke: var(--gold-light); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.contact-card:hover {
+  border-color: rgba(181,150,74,0.4);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
 
-    .contact-detail-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-light); }
-    .contact-detail-val { font-size: 0.9rem; font-weight: 600; color: var(--navy); margin-top: 2px; }
-    .contact-detail-val a { color: inherit; text-decoration: none; }
-    .contact-detail-val a:hover { color: var(--gold); }
+.contact-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: var(--navy); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.contact-icon svg { width: 20px; height: 20px; stroke: var(--gold-light); fill: none; stroke-width: 1.5; }
 
-    /* FORM */
-    .contact-form {
-      background: var(--white);
-      border-radius: 14px; padding: 2.5rem;
-      border: 1px solid var(--gray-soft);
-      box-shadow: 0 4px 40px rgba(0,0,0,0.06);
-    }
+.contact-detail-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-light); }
+.contact-detail-val { font-size: 0.9rem; font-weight: 600; color: var(--navy); margin-top: 2px; line-height: 1.4; }
+.contact-detail-val a { color: inherit; text-decoration: none; }
 
-    .form-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem; color: var(--navy);
-      letter-spacing: 1px; margin-bottom: 1.5rem;
-    }
+/* FORM RESPONSIVENESS */
+.contact-form {
+  background: var(--white);
+  border-radius: 14px; 
+  padding: 1.5rem; /* Reduced padding for mobile screens */
+  border: 1px solid var(--gray-soft);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+}
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; color: var(--navy);
+  letter-spacing: 1px; margin-bottom: 1.5rem;
+}
 
-    .form-group { margin-bottom: 1.25rem; }
+/* Stack the form row on mobile */
+.form-row { 
+  display: grid; 
+  grid-template-columns: 1fr; 
+  gap: 1rem; 
+}
 
-    .form-group label {
-      display: block; font-size: 0.8rem; font-weight: 700;
-      letter-spacing: 0.5px; color: var(--text-mid); margin-bottom: 0.4rem;
-    }
+.form-group { margin-bottom: 1.25rem; }
 
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%; padding: 0.75rem 1rem;
-      border: 1.5px solid var(--gray-soft);
-      border-radius: 8px; background: var(--cream);
-      font-family: 'Outfit', sans-serif; font-size: 0.9rem; color: var(--navy);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(181,150,74,0.12);
-    }
+.form-group label {
+  display: block; font-size: 0.8rem; font-weight: 700;
+  color: var(--text-mid); margin-bottom: 0.4rem;
+}
 
-    .form-group textarea { resize: vertical; min-height: 110px; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%; padding: 0.8rem 1rem;
+  border: 1.5px solid var(--gray-soft);
+  border-radius: 8px; background: var(--cream);
+  font-family: 'Outfit', sans-serif; font-size: 16px; /* 16px prevents iOS auto-zoom on focus */
+  color: var(--navy);
+  outline: none;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+}
 
-    .form-submit {
-      width: 100%; padding: 1rem;
-      background: var(--navy); color: var(--white);
-      border: none; border-radius: 8px; cursor: pointer;
-      font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
-      letter-spacing: 0.5px;
-      transition: background 0.2s;
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-    }
-    .form-submit:hover { background: var(--gold); color: var(--navy); }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(181,150,74,0.12);
+}
 
-    .form-submit svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.form-submit {
+  width: 100%; padding: 1rem;
+  background: var(--navy); color: var(--white);
+  border: none; border-radius: 8px; cursor: pointer;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+/* ── FORM SUBMIT ICON FIX ── */
+.form-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem; /* Gap between text and icon */
+}
 
-    .form-success {
-      display: none; text-align: center; padding: 2rem;
-      color: var(--navy);
-    }
-    .form-success svg { width: 48px; height: 48px; stroke: #22c55e; fill: none; stroke-width: 1.5; margin-bottom: 1rem; }
-    .form-success h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
-    .form-success p { color: var(--text-light); font-size: 0.9rem; }
+.form-submit svg {
+  /* Strictly cap the size of the paper plane icon */
+  width: 18px; 
+  height: 18px;
+  flex-shrink: 0;
+  stroke: currentColor; /* Matches the text color (white/navy) */
+  fill: none;
+  stroke-width: 2.5; /* Makes it look sharp */
+}
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--navy); padding: 3rem 5% 2rem;
-      border-top: 1px solid rgba(181,150,74,0.15);
-    }
+/* ── FORM SUCCESS ICON FIX ── */
+.form-success {
+  display: none; /* Controlled by JS */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
 
-    .footer-top {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 2rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      margin-bottom: 2rem;
-    }
+.form-success svg {
+  /* The big checkmark circle should be visible but not huge */
+  width: 60px; 
+  height: 60px;
+  margin-bottom: 1.5rem;
+  stroke: #22c55e; /* Success Green */
+  fill: none;
+  stroke-width: 1.5;
+}
 
-    .footer-brand {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem; color: var(--white); letter-spacing: 2px;
-    }
-    .footer-brand span { display: block; font-size: 0.55rem; letter-spacing: 3px; color: var(--gold); font-family: 'Outfit', sans-serif; font-weight: 600; margin-top: 2px; }
+/* Ensure the success text matches the branding */
+.form-success h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--navy);
+}
 
-    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
-    .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--gold); }
+/* ── Tablet & Desktop Breakpoint ── */
+@media (min-width: 992px) {
+  
+  .contact-layout {
+    grid-template-columns: 1fr 1.4fr; 
+    gap: 5rem;
+  }
+  
+  .contact-form { padding: 3rem; }
+  
+  /* Return to two-column inputs for desktop */
+  .form-row { grid-template-columns: 1fr 1fr; }
+  
+  .contact-info h2 { font-size: 3rem; }
+}
 
-    .footer-bottom {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
-    }
+/* Success Message Scaling */
+.form-success h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; }
 
-    .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+/* ── FOOTER ── */
+footer {
+  background: var(--navy); 
+  padding: 6rem 2rem; 
+  border-top: 1px solid rgba(181,150,74,0.15);
+}
 
-    .footer-tagline {
-      font-size: 0.8rem; color: rgba(255,255,255,0.35);
-    }
-    .footer-tagline span { color: var(--gold); }
+.footer-top {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  flex-wrap: wrap; 
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 2rem;
+}
 
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible { opacity: 1; transform: none; }
+.footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; 
+  color: var(--white); 
+  letter-spacing: 2px;
+}
+
+.footer-brand span { 
+  display: block; 
+  font-size: 0.55rem; 
+  letter-spacing: 3px; 
+  color: var(--gold-light); 
+  font-family: 'Outfit', sans-serif; 
+  font-weight: 600; 
+  margin-top: 2px; 
+}
+
+.footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+.footer-links a { 
+  color: rgba(255,255,255,0.5); 
+  text-decoration: none; 
+  font-size: 0.85rem; 
+  transition: color 0.2s; 
+}
+.footer-links a:hover { color: var(--gold-light); }
+
+.footer-bottom {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  flex-wrap: wrap; 
+  gap: 1.5rem;
+}
+
+.footer-copy, .footer-tagline, .footer-dev { 
+  font-size: 0.8rem; 
+  color: rgba(255,255,255,0.35); 
+}
+
+/* Developer Link Styling */
+.footer-dev a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.footer-dev a:hover {
+  color: var(--gold-light);
+}
+
+.footer-tagline span { color: var(--gold-light); }
+
+/* Responsive adjustments for the bottom bar */
+@media (max-width: 768px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start; /* Keeps alignment match with previous sections */
+    gap: 0.75rem;
+  }
+  
+  .footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
