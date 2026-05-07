@@ -278,6 +278,22 @@
       transition: background 0.25s;
       position: relative; overflow: hidden;
     }
+    
+    .service-card:nth-child(1).active {
+      animation-delay: 0.2s;
+    }
+    
+    .service-card:nth-child(2).active {
+      animation-delay: 0.4s;
+    }
+    
+    .service-card:nth-child(3).active {
+      animation-delay: 0.6s;
+    }
+    
+    .service-card:nth-child(4).active {
+      animation-delay: 0.8s;
+    }
 
     .service-card::before {
       content: '';
