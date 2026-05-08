@@ -140,10 +140,27 @@
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      background: var(--navy);
+      background: radial-gradient(circle at top right,
+        rgba(200,80,42,0.28),
+        transparent 30%),
+        
+        radial-gradient(circle at bottom left,
+        rgba(59,130,246,0.18),
+        transparent 30%),
+        
+        linear-gradient(
+        135deg,
+        #040814 0%,
+        #0d1f3c 40%,
+        #163563 100%
+        );
       display: flex; align-items: center;
       position: relative; overflow: hidden;
       padding: 6rem 5% 4rem;
+    }
+    @media (max-width: 768px) {
+      .hero{
+        background: linear-gradient( 145deg, #050b16 0%, #0d1f3c 50%, #183764 100%);}
     }
 
     .hero-grid-bg {
@@ -154,12 +171,6 @@
       background-size: 60px 60px;
     }
 
-    .hero-glow {
-      position: absolute; right: -10%; top: 50%; transform: translateY(-50%);
-      width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(181,150,74,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
 
     .hero-content { position: relative; z-index: 2; max-width: 700px; }
 
