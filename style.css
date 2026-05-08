@@ -294,7 +294,14 @@
     .service-card:nth-child(4).active {
       animation-delay: 0.8s;
     }
-
+    @media (max-width: 768px) {
+      .service-card:nth-child(1).active,
+      .service-card:nth-child(2).active,
+      .service-card:nth-child(3).active,
+      .service-card:nth-child(4).active {
+        animation-delay: 0s;
+      }
+    }
     .service-card::before {
       content: '';
       position: absolute; bottom: 0; left: 0; right: 0;
