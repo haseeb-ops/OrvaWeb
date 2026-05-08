@@ -621,7 +621,7 @@
   display: grid; 
   /* Default: Stacked for mobile */
   grid-template-columns: 1fr; 
-  gap: 3rem; 
+  gap: 2rem; 
   align-items: start;
 }
 
@@ -640,22 +640,119 @@
   margin-bottom: 2rem;
 }
 
+.contact-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+
+.team-label {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-light);
+    padding: 0.25rem 0 0.1rem;
+  }
+
+  .team-card {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 1.4rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /*transition: transform 0.25s, box-shadow 0.25s;*/
+  }
+  .team-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(15,31,56,0.25);
+  }
+
+  .team-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .team-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+  .team-phone {
+    font-size: 0.88rem;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  /* Quick-action buttons: Call + WhatsApp */
+  .team-actions {
+    display: flex;
+    gap: 0.55rem;
+    flex-shrink: 0;
+  }
+
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+  .btn-action:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+  }
+  .btn-action svg {
+    width: 15px; height: 15px; flex-shrink: 0;
+  }
+
+  .btn-call {
+    background: rgba(255,255,255,0.13);
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.22);
+  }
+  .btn-call svg { stroke: var(--white); fill: none; stroke-width: 2; }
+
+  .btn-wa {
+    background: #25D366;
+    color: var(--white);
+  }
+  .btn-wa svg { fill: var(--white); stroke: none; }
+
+
+
+
 .contact-card {
   background: var(--white);
-  border-radius: 10px; 
-  padding: 1.25rem;
   display: flex; 
   align-items: center; 
   gap: 1rem;
-  margin-bottom: 1rem;
   border: 1px solid var(--gray-soft);
-  transition: all 0.3s ease;
+  border-radius: 16px;
+  padding: 1.4rem 1.5rem;
+  position: relative;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.contact-card:hover{
+  transform: translateY(-30px);
+  box-shadow: 0 12px 40px rgba(15,31,56,0.25);
 }
 
-.contact-card:hover {
-  border-color: rgba(181,150,74,0.4);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
+
 
 .contact-icon {
   width: 44px; height: 44px; border-radius: 10px;
@@ -705,6 +802,7 @@
   border-radius: 8px; background: var(--cream);
   font-family: 'Outfit', sans-serif; font-size: 16px; /* 16px prevents iOS auto-zoom on focus */
   color: var(--navy);
+  transition: all 0.25s ease;
   outline: none;
   box-sizing: border-box; /* Ensures padding doesn't break width */
 }
