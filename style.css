@@ -142,8 +142,11 @@
     min-height: 100vh;
     position: relative;
     overflow: hidden;
-    display: flex; align-items: center;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
     padding: 6rem 5% 4rem;
+    text-align: center;
   }
   
   .hero::before {
@@ -170,7 +173,15 @@
     }
 
 
-    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      }
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -203,7 +214,9 @@
     }
 
     .hero-btns {
-      display: flex; gap: 1rem; flex-wrap: wrap;
+      display: flex; gap: 1rem; 
+      flex-wrap: wrap;
+      justify-content: center;
       animation: fadeUp 0.8s 0.3s ease forwards;
     }
 
@@ -226,7 +239,9 @@
     .btn-outline:hover { border-color: var(--white); }
 
     .hero-stats {
-      display: flex; gap: 3rem; margin-top: 4rem;
+      display: flex; gap: 3rem; 
+      margin-top: 4rem;
+      justify-content: center;
     }
 
     .stat { border-left: 2px solid var(--gold); padding-left: 1rem; }
