@@ -149,6 +149,7 @@
     text-align: center;
   }
   
+  
   .hero::before {
     content: '';
     position: fixed;
@@ -193,21 +194,26 @@
       margin-bottom: 2rem;
       animation: fadeUp 0.8s 0.1s ease forwards;
     }
-    /* .hero-badge::before { content: '●'; font-size: 0.5rem; } */
+     .hero-badge::before { content: '●'; font-size: 0.5rem; } 
 
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-size: clamp(3rem, 8vw, 7rem);
       line-height: 0.95;
       color: var(--white);
       margin-bottom: 1.5rem;
       animation: fadeUp 0.8s 0.25s ease forwards;
     }
     .hero-title em { color: var(--gold-light); font-style: normal; }
+    @media (max-width: 768px){
+    .hero-title{
+      
+    }
+  }
 
     .hero-sub {
       font-size: 1.1rem; color: rgba(255,255,255,0.65);
-      line-height: 1.7; max-width: 520px;
+      line-height: 1.5; max-width: 520px;
       margin-bottom: 2.5rem;
       font-weight: 300;
       animation: fadeUp 0.8s 0.5s ease forwards;
