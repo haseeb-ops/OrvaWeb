@@ -205,11 +205,6 @@
       animation: fadeUp 0.8s 0.25s ease forwards;
     }
     .hero-title em { color: var(--gold-light); font-style: normal; }
-    @media (max-width: 768px){
-    .hero-title{
-      
-    }
-  }
 
     .hero-sub {
       font-size: 1.1rem; color: rgba(255,255,255,0.65);
