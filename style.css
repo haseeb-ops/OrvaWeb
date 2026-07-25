@@ -194,7 +194,7 @@
       margin-bottom: 2rem;
       animation: fadeUp 0.8s 0.1s ease forwards;
     }
-     .hero-badge::before { content: '●'; font-size: 0.5rem; } 
+     /* .hero-badge::before { content: '●'; font-size: 0.5rem; } */
 
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
